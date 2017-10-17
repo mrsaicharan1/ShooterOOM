@@ -153,6 +153,36 @@ public void move(String dir)
  abstract class Strategy{
 	 
  }
+ class Nearest extends Strategy{
+	 
+ }
+ class Random extends Strategy{
+	 
+	 
+ }
+ class AheadOfMap extends Strategy{
+	 
+ }
+ class GoToBomb extends Strategy{
+	 
+ }
+ class Order{
+	 Player a[] = new Player[100];
+	 Player b[] = new Player[100];
+ 
+ }
+ class circular extends Order{
+
+	 
+	 
+ }
+ class bySuccess extends Order{
+	 
+	 
+ }
+ class byEnergy extends Order{
+	 
+ }
  }
  
 
