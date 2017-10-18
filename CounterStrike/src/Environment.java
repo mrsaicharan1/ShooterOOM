@@ -13,7 +13,7 @@ public class Environment {
 	        }
 		}
 		InputHandler IH = new InputHandler(8,8);
-
+System.out.println(grid);
 	}
 	
 	class InputHandler {
@@ -127,11 +127,15 @@ public void move(String dir)
 {
 	if(site(P, Q)==Q)
 	{
-		if(Q.getHealth()>0) {
+		if(Q.getHealth()>0) 
+		{
 		Q.setHealth(Q.getHealth()-1);
 		}
 	}
 }
+ void sortByIndex(Player P[]) {
+	 
+ }
  class Order{
 	 Player a[] = new Player[100];
 	 Player b[] = new Player[100];
@@ -184,7 +188,26 @@ cq.add(b[u]);
 	 }
  }
 
- class Aggressive extends Player{
+ 
+ abstract class Strategy{
+	 
+ }
+ class Nearest extends Strategy{
+	 
+ }
+ class Random extends Strategy{
+	 
+	 
+ }
+ class AheadOfMap extends Strategy{
+	 
+ }
+ class GoToBomb extends Strategy{
+	 
+ }
+ 
+	}
+	class Aggressive extends Player{
       	Aggressive(int health,int speed)
       	{
       		super.setHealth(2);
@@ -220,24 +243,8 @@ cq.add(b[u]);
       	}
       	
  }
- abstract class Strategy{
-	 
- }
- class Nearest extends Strategy{
-	 
- }
- class Random extends Strategy{
-	 
-	 
- }
- class AheadOfMap extends Strategy{
-	 
- }
- class GoToBomb extends Strategy{
-	 
- }
- 
 }
+
 
 
 
