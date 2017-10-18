@@ -5,29 +5,48 @@ public class Environment {
 
 
 	public static void main(String args[]) {
-		
+		Scanner s = new Scanner(System.in);
 		char grid[][]= new char[10][10];
 		for(int i=0; i<grid.length; i++) {          
 	        for(int j=0; j<grid.length; j++) {
 	        	grid[i][j]='*'; 	
 	        }
 		}
-		
+		InputHandler IH = new InputHandler(8,8);
+
 	}
 	
-	class InputHandler{
+	class InputHandler {
 		Scanner s = new Scanner(System.in);
-		int t=s.nextInt();
-		int ct=s.nextInt();
-	Player CT[] = new Player[ct];
-	Player T[] = new Player[t];
+		 int t;
+	int ct;
+	InputHandler(int t,int ct){
+	this.t= t;
+	this.ct=ct;
 	}
-abstract class Player{
+		Player CT[] = new Player[ct];
+	Player T[] = new Player[t];
+	
+	for(Player P: CT)	
+	{
+		P.setType(s.next());
+		P.setX(s.nextInt());
+		P.setY(s.nextInt());
+		P.setEnergy(s.nextInt());
+	}
+	}
+	class Player{
 int index;
  String type;
 int energy,speed,health;
  int x,y;
-
+int kills;
+public int getKills() {
+	return kills;
+}
+public void setKills(int kills) {
+	this.kills = kills;
+}
 public int getIndex() {
 	return index;
 }
@@ -113,7 +132,58 @@ public void move(String dir)
 		}
 	}
 }
+ class Order{
+	 Player a[] = new Player[100];
+	 Player b[] = new Player[100];
+ 
+ }
+ class circular extends Order{
+	 
+Queue<Player> cq = new LinkedList<Player>(); 	
+
+for(int u=0;u<IH.ct+IH.t;u++)
+{
+cq.add(a[u]);
+cq.add(b[u]);
 }
+	 
+ }
+ class bySuccess extends Order {
+	 InputHandler IH = new InputHandler(8,8);
+	 bySuccess(Player P[])
+	 {
+		 for(int r1=0;r1<IH.ct;r1++) {
+		 for(int r2=0;r2<IH.ct;r2++)
+		 {
+			 if(P[r1].getKills()<P[r2].getKills())
+			 {
+				 Player temp = P[r1];
+				 P[r1]=P[r2];
+				 P[r2]=temp;
+			 }
+		 }
+		 }
+	 }
+	 
+ }
+ class byEnergy extends Order{
+	 InputHandler IH = new InputHandler(8,8);
+	 byEnergy(Player P[])
+	 {
+		 for(int r1=0;r1<IH.ct;r1++) {
+		 for(int r2=0;r2<IH.ct;r2++)
+		 {
+			 if(P[r1].getEnergy()<P[r2].getEnergy())
+			 {
+				 Player temp = P[r1];
+				 P[r1]=P[r2];
+				 P[r2]=temp;
+			 }
+		 }
+		 }
+	 }
+ }
+
  class Aggressive extends Player{
       	Aggressive(int health,int speed)
       	{
@@ -138,7 +208,7 @@ public void move(String dir)
       	}
       	 
  }
- class Blind extends Player{
+  class Blind extends Player{
 	   	Blind(int health,int speed)
       	{
       		super.setHealth(3);
@@ -166,25 +236,9 @@ public void move(String dir)
  class GoToBomb extends Strategy{
 	 
  }
- class Order{
-	 Player a[] = new Player[100];
-	 Player b[] = new Player[100];
  
- }
- class circular extends Order{
+}
 
-	 
-	 
- }
- class bySuccess extends Order{
-	 
-	 
- }
- class byEnergy extends Order{
-	 
- }
- }
- 
 
 
 
