@@ -1,22 +1,11 @@
 /*We consider the game to be a 2-D one. 
  * The players are spread across the map and can move by one step in any of the 4 possible directions at a time*/
 import java.util.*;
+
 public class Environment {
 
 
-	public static void main(String args[]) {
-		Scanner s = new Scanner(System.in);
-		char grid[][]= new char[10][10];
-		for(int i=0; i<grid.length; i++) {          
-	        for(int j=0; j<grid.length; j++) {
-	        	grid[i][j]='*'; 	
-	        }
-		}
-		InputHandler IH = new InputHandler(8,8);
-System.out.println(grid);
-	}
-	
-	class InputHandler {
+	public class InputHandler {
 		Scanner s = new Scanner(System.in);
 		 int t;
 	int ct;
@@ -25,16 +14,37 @@ System.out.println(grid);
 	this.ct=ct;
 	}
 		Player CT[] = new Player[ct];
-	Player T[] = new Player[t];
+	    Player T[] = new Player[t];
+
+		
+	    void sortByIndex(Player P[],int n) {
+	    	 for(int k=0;k<n;k++) {
+	    	 for(int i=0;i<n;i++) {
+	    		 if(P[k].getIndex()<P[i].getIndex()) {
+	    			 int temp = P[k].getIndex();
+	    			 P[k].setIndex(P[i].getIndex());
+	    			 P[i].setIndex(temp);
+	    			 
+	    		 }
+	    	 }
+	    	 }
+	    }
+	 
+	}
+	public static void main(String args[]) {
+		Scanner s = new Scanner(System.in);
+		char grid[][]= new char[10][10];
+		for(int i=0; i<grid.length; i++) {          
+	        for(int j=0; j<grid.length; j++) {
+	        	grid[i][j]='*'; 	
+	        }
+		}
+		
+		
+System.out.println(grid);
+	}
 	
-	for(Player P: CT)	
-	{
-		P.setType(s.next());
-		P.setX(s.nextInt());
-		P.setY(s.nextInt());
-		P.setEnergy(s.nextInt());
-	}
-	}
+
 	class Player{
 int index;
  String type;
@@ -108,13 +118,7 @@ public void move(String dir)
 		this.setX(this.getX()+1);
 	}
 	
-	
-	
-	
-	
-	
-}
-	
+	}
 
  Player site(Player P,Player Q) {
 	if( P.getY()==Q.getY() ||  P.getX()==Q.getX() ) 
@@ -125,7 +129,7 @@ public void move(String dir)
 }
  void fire(Player P,Player Q)
 {
-	if(site(P, Q)==Q)
+	if(site(P,Q)==Q)
 	{
 		if(Q.getHealth()>0) 
 		{
@@ -133,27 +137,57 @@ public void move(String dir)
 		}
 	}
 }
- void sortByIndex(Player P[]) {
-	 
- }
+
  class Order{
+	 
+	 InputHandler IH = new InputHandler(8,8);
 	 Player a[] = new Player[100];
 	 Player b[] = new Player[100];
- 
+    
  }
  class circular extends Order{
-	 
-Queue<Player> cq = new LinkedList<Player>(); 	
-
-for(int u=0;u<IH.ct+IH.t;u++)
+circular(Player P[])
 {
-cq.add(a[u]);
-cq.add(b[u]);
+	 for(int k=0;k<IH.t;k++) {
+    	 for(int i=0;i<IH.ct;i++) {
+    		 if(IH.T[k].getIndex()<IH.T[i].getIndex()) {
+    			 int temp = IH.T[k].getIndex();
+    			 IH.T[k].setIndex(IH.T[i].getIndex());
+    			 IH.T[i].setIndex(temp);
+    			 
+    		 }
+    	 }
+    	 }
+	 for(int k=0;k<IH.t;k++) {
+    	 for(int i=0;i<IH.ct;i++) {
+    		 if(IH.CT[k].getIndex()<IH.CT[i].getIndex()) {
+    			 int temp = IH.CT[k].getIndex();
+    			 IH.CT[k].setIndex(IH.CT[i].getIndex());
+    			 IH.CT[i].setIndex(temp);
+    			 
+    		 }
+    	 }
+    	 }
+	 Player IndexSort[] = new Player[IH.t+IH.ct];
+	 int key=0;
+	 for(int g=0;g<IH.t+IH.ct;g++)
+	 {
+	 if(key==0)
+	 {
+		 IndexSort[g]=IH.T[g];
+	 key++;
+	 }		 
+			if(key==1)	 {
+				IndexSort[g]=IH.CT[g];
+			key--;
+			}
+		 
+	 }
 }
-	 
+
  }
  class bySuccess extends Order {
-	 InputHandler IH = new InputHandler(8,8);
+	 
 	 bySuccess(Player P[])
 	 {
 		 for(int r1=0;r1<IH.ct;r1++) {
@@ -171,7 +205,7 @@ cq.add(b[u]);
 	 
  }
  class byEnergy extends Order{
-	 InputHandler IH = new InputHandler(8,8);
+	 
 	 byEnergy(Player P[])
 	 {
 		 for(int r1=0;r1<IH.ct;r1++) {
@@ -243,7 +277,18 @@ cq.add(b[u]);
       	}
       	
  }
+  
+
+class GameEngine {
+Environment access = new Environment();
+void play()
+{
+	
 }
+}
+
+}
+
 
 
 
