@@ -5,17 +5,35 @@ import java.util.*;
 public class Environment {
 
 
-	public class InputHandler {
+	public class InputHandler {//Takes in various inputs 
 		Scanner s = new Scanner(System.in);
-		 int t;
-	int ct;
+		 int t=s.nextInt();
+	int ct=s.nextInt();
 	InputHandler(int t,int ct){
 	this.t= t;
 	this.ct=ct;
 	}
 		Player CT[] = new Player[ct];
 	    Player T[] = new Player[t];
-
+for(Player P:T)//take in player attributes of Terrorists
+	
+{
+	P.setIndex(s.nextInt());
+	P.setEnergy(s.nextInt());
+	P.setType(s.next());
+	P.setX(s.nextInt());
+	P.setY(s.nextInt());
+}
+		for(Player P:CT)//take in player attributes of Counter-Terrorists
+	
+{
+	P.setIndex(s.nextInt());
+	P.setEnergy(s.nextInt());
+	P.setType(s.next());
+	P.setX(s.nextInt());
+	P.setY(s.nextInt());
+}
+}
 		
 	    void sortByIndex(Player P[],int n) {
 	    	 for(int k=0;k<n;k++) {
@@ -34,7 +52,7 @@ public class Environment {
 	public static void main(String args[]) {
 		Scanner s = new Scanner(System.in);
 		char grid[][]= new char[10][10];
-		for(int i=0; i<grid.length; i++) {          
+		for(int i=0; i<grid.length; i++) {          //Prints out the battlefield
 	        for(int j=0; j<grid.length; j++) {
 	        	grid[i][j]='*'; 	
 	        }
@@ -45,7 +63,7 @@ System.out.println(grid);
 	}
 	
 
-	class Player{
+	class Player{//Player Class
 int index;
  String type;
 int energy,speed,health;
@@ -99,7 +117,7 @@ public int getY() {
 public void setY(int y) {
 	this.y = y;
 }
-public void move(String dir)
+public void move(String dir)//Moving in a 2-D plane
 {
 	if(dir.equals("u"))
 	{
@@ -120,7 +138,7 @@ public void move(String dir)
 	
 	}
 
- Player site(Player P,Player Q) {
+ Player site(Player P,Player Q) {//To check if the player is in his line of sight
 	if( P.getY()==Q.getY() ||  P.getX()==Q.getX() ) 
 	{
 		return Q;
@@ -131,9 +149,9 @@ public void move(String dir)
 {
 	if(site(P,Q)==Q)
 	{
-		if(Q.getHealth()>0) 
+		if(Q.getHealth()>0) //If the health is below zero,the player's health cannot go below zero as he has already perished
 		{
-		Q.setHealth(Q.getHealth()-1);
+		Q.setHealth(Q.getHealth()-1);//Health of the opponent getting shot depletes by 1 as the player shoots another one
 		}
 	}
 }
@@ -145,10 +163,10 @@ public void move(String dir)
 	 Player b[] = new Player[100];
     
  }
- class circular extends Order{
+ class circular extends Order{//Using a circular array 
 circular(Player P[])
 {
-	 for(int k=0;k<IH.t;k++) {
+	 for(int k=0;k<IH.t;k++) {//Sorting T[]
     	 for(int i=0;i<IH.ct;i++) {
     		 if(IH.T[k].getIndex()<IH.T[i].getIndex()) {
     			 int temp = IH.T[k].getIndex();
@@ -158,7 +176,7 @@ circular(Player P[])
     		 }
     	 }
     	 }
-	 for(int k=0;k<IH.t;k++) {
+	 for(int k=0;k<IH.t;k++) {//Sorting CT[]
     	 for(int i=0;i<IH.ct;i++) {
     		 if(IH.CT[k].getIndex()<IH.CT[i].getIndex()) {
     			 int temp = IH.CT[k].getIndex();
@@ -169,7 +187,7 @@ circular(Player P[])
     	 }
     	 }
 	 Player IndexSort[] = new Player[IH.t+IH.ct];
-	 int key=0;
+	 int key=0;//Using a semaphore-like variable to enqueue each element according to their index into the circular queue
 	 for(int g=0;g<IH.t+IH.ct;g++)
 	 {
 	 if(key==0)
@@ -186,7 +204,7 @@ circular(Player P[])
 }
 
  }
- class bySuccess extends Order {
+ class bySuccess extends Order {//Order according to number of kills
 	 
 	 bySuccess(Player P[])
 	 {
@@ -204,7 +222,7 @@ circular(Player P[])
 	 }
 	 
  }
- class byEnergy extends Order{
+ class byEnergy extends Order{//Order according to energy
 	 
 	 byEnergy(Player P[])
 	 {
@@ -241,7 +259,7 @@ circular(Player P[])
  }
  
 	}
-	class Aggressive extends Player{
+	class Aggressive extends Player{//Setting health to 2 as 2 shots are needed for killing an Aggressive player
       	Aggressive(int health,int speed)
       	{
       		super.setHealth(2);
@@ -250,10 +268,10 @@ circular(Player P[])
      
       void  move()
       	{
-      		this.setEnergy(this.getEnergy()-2);
+      		this.setEnergy(this.getEnergy()-2);//Energy depletes by 2 as he moves
       	}
  }
- class Cautious extends Player{
+ class Cautious extends Player{//Setting health to 1 as 1 shots are needed for killing an Cautious player
 	   	Cautious(int health,int speed)
       	{
       		super.setHealth(1);
@@ -261,11 +279,11 @@ circular(Player P[])
       	}
 	    void  move()
       	{
-      		this.setEnergy(this.getEnergy()-1);
+      		this.setEnergy(this.getEnergy()-1);//Energy depletes by 1 as he moves
       	}
       	 
  }
-  class Blind extends Player{
+  class Blind extends Player{//Setting health to 3 as 3 shots are needed for killing an Blind player
 	   	Blind(int health,int speed)
       	{
       		super.setHealth(3);
@@ -273,7 +291,7 @@ circular(Player P[])
       	}
 	    void  move()
       	{
-      		this.setEnergy(this.getEnergy()-3);
+      		this.setEnergy(this.getEnergy()-3);//Energy depletes by 3 as he moves
       	}
       	
  }
